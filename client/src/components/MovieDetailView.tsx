@@ -2,6 +2,7 @@ import { Box, CircularProgress, Typography } from '@material-ui/core';
 import { useEffect, useState } from 'react';
 import { MovieDetails, MovieListItem } from '../models/movie';
 import { MovieReview, ReviewResponse } from '../models/review';
+import { fetchApi } from '../utils/fetchApi';
 import MovieDetailsCard from './MovieDetailCard';
 import ReviewCard from './ReviewCard';
 
@@ -11,12 +12,12 @@ export type MovieDetailsProps = {
 }
 
 async function fetchDetails(id: string) {
-  const response = await fetch(`/api/movies/${id}`);
+  const response = await fetchApi(`/movies/${id}`);
   return await response.json() as MovieDetails;
 }
 
 async function fetchReviews(title: string) {
-  const response = await fetch(`/api/reviews?title=${title}`);
+  const response = await fetchApi(`/reviews?title=${title}`);
   const data = await response.json() as ReviewResponse;
   return data.results || [];
 }

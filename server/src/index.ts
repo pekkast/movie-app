@@ -1,3 +1,4 @@
+import cors from 'cors'
 import { config as loadEnv } from 'dotenv'
 import express from 'express'
 import fetch from 'node-fetch'
@@ -13,13 +14,9 @@ const omdbApiSearch = async (query: string, page = 1) => fetch(utf8.encode(`${om
 const omdbApiDetails = async (id: string) => fetch(`${omdbApiUrl}&i=${id}&plot=short`)
 
 const app = express()
-const PORT = 8000
+const PORT = process.env.PORT || 5000
 
-app.use(express.static(path.join(__dirname, '../../client/build')))
-
-app.get('/', function (req, res) {
-  res.sendFile(path.join(__dirname, '../../client/build', 'index.html'))
-})
+app.use(cors({ origin: process.env.CLIENT_URL }))
 
 app.get('/api/reviews', async (req, res) => {
     const review = await nytApiFetch(req.query.title as string)

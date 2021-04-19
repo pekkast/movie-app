@@ -9,6 +9,7 @@ import MovieDetailView from './components/MovieDetailView';
 import MovieGrid from './components/MovieGrid';
 import useDebounce from './hooks/useDebounce';
 import { MovieListItem, MovieSearchResult } from './models/movie';
+import { fetchApi } from './utils/fetchApi';
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -38,7 +39,7 @@ const hasMorePages = (count: number, totalCount: number, page = 1, pageSize = mo
 }
 
 async function searchMovies(query: string, page = 1) {
-  const response = await fetch(`/api/movies?s=${query}&page=${page}`)
+  const response = await fetchApi(`/movies?s=${query}&page=${page}`)
   return response.json() as Promise<MovieSearchResult>
 }
 
