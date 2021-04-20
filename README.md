@@ -10,3 +10,5 @@ OMDB_APIKEY=thekey
 
 ## Run the app
 ``docker-compose up``
+
+App will be served at ``http://localhost:3000``
