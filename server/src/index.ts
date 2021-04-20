@@ -16,7 +16,14 @@ const omdbApiDetails = async (id: string) => fetch(`${omdbApiUrl}&i=${id}&plot=s
 const app = express()
 const PORT = process.env.PORT || 5000
 
-app.use(cors({ origin: process.env.CLIENT_URL }))
+app.use(cors({ origin: process.env.CLIENT_URL || 'http://no-cors.need.ed' }))
+
+app.use(express.static(path.join(__dirname, '../ui')))
+
+app.get('/', function (req, res) {
+  console.log('root', req)
+  res.sendFile(path.join(__dirname, '../ui', 'index.html'))
+})
 
 app.get('/api/reviews', async (req, res) => {
     const review = await nytApiFetch(req.query.title as string)
@@ -43,5 +50,5 @@ app.get('/api/movies', async (req, res) => {
 })
 
 app.listen(PORT, () => {
-  console.log(`⚡️[server]: Server is running at https://localhost:${PORT}`)
+  console.log(`⚡️[server]: Server is running at ${PORT}`)
 })
