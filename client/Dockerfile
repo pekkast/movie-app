@@ -10,11 +10,3 @@ RUN npm ci
 COPY . /code
 
 CMD [ "npm", "start" ]
-
-FROM development AS builder
-
-RUN npm run build
-
-FROM nginx:1.13-alpine
-
-COPY --from=builder /code/build /usr/share/nginx/html
